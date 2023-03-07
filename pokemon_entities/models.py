@@ -20,3 +20,6 @@ class PokemonEntity(models.Model):
     strength = models.IntegerField()
     defence = models.IntegerField()
     stamina = models.IntegerField()
+
+    def __str__(self):
+        return f'Pokemon entity of {self.pokemon.title}'
