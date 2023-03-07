@@ -2,12 +2,15 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title = models.CharField(max_length=200)
+    title_ru = models.CharField(max_length=100)
+
     image = models.ImageField(upload_to='pokemon', null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
+    title_en = models.CharField(max_length=100, default='title en')
+    title_jp = models.CharField(max_length=100, default='title jp')
 
     def __str__(self):
-        return self.title
+        return self.title_ru
 
 
 class PokemonEntity(models.Model):
@@ -23,4 +26,4 @@ class PokemonEntity(models.Model):
     stamina = models.IntegerField()
 
     def __str__(self):
-        return f'Pokemon entity of {self.pokemon.title}'
+        return f'Pokemon entity of {self.pokemon.title_ru}'
