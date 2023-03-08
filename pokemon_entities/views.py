@@ -73,17 +73,20 @@ def show_pokemon(request, pokemon_id):
         'entities': [],
     }
 
-    if requested_pokemon.evolution_from:
+    previous_evolution = requested_pokemon.evolution_from
+    next_evolution = requested_pokemon.evolution_to.first()
+
+    if previous_evolution:
         pokemon['previous_evolution'] = {
-            'title_ru': requested_pokemon.evolution_from.title_ru,
-            'pokemon_id': requested_pokemon.evolution_from.id,
-            'img_url': requested_pokemon.evolution_from.image.url,
+            'title_ru': previous_evolution.title_ru,
+            'pokemon_id': previous_evolution.id,
+            'img_url': previous_evolution.image.url,
         }
-    if requested_pokemon.evolution_to:
+    if next_evolution:
         pokemon['next_evolution'] = {
-            'title_ru': requested_pokemon.evolution_to.title_ru,
-            'pokemon_id': requested_pokemon.evolution_to.id,
-            'img_url': requested_pokemon.evolution_to.image.url,
+            'title_ru': next_evolution.title_ru,
+            'pokemon_id': next_evolution.id,
+            'img_url': next_evolution.image.url,
         }
 
     pokemon_entities = PokemonEntity.objects.filter(pokemon__id=requested_pokemon.id)
