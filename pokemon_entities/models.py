@@ -4,13 +4,13 @@ from django.db import models  # noqa F401
 class Pokemon(models.Model):
     """Покемон"""
     title_ru = models.CharField('Название(рус)', max_length=100)
-    title_en = models.CharField('Название(англ)', max_length=100)
-    title_jp = models.CharField('Название(яп)', max_length=100)
+    title_en = models.CharField('Название(англ)', max_length=100, blank=True)
+    title_jp = models.CharField('Название(яп)', max_length=100, blank=True)
     image = models.ImageField('Картинка', upload_to='pokemon', null=True, blank=True)
     description = models.TextField('Описание')
     evolution_from = models.ForeignKey(
         verbose_name='Эволюция(из кого)',
-        to='self', on_delete=models.CASCADE,
+        to='self', on_delete=models.PROTECT,
         related_name='evolution_to',
         null=True, blank=True,
     )
@@ -23,7 +23,7 @@ class PokemonEntity(models.Model):
     """Объект покемона"""
     lat = models.FloatField('Широта')
     lon = models.FloatField('Долгота')
-    pokemon = models.ForeignKey(verbose_name='Покемон', to=Pokemon, on_delete=models.CASCADE)
+    pokemon = models.ForeignKey(verbose_name='Покемон', to=Pokemon, related_name='pokemons', on_delete=models.PROTECT)
     appeared_at = models.DateTimeField('Появился')
     disappeared_at = models.DateTimeField('Исчез')
     level = models.IntegerField('Уровень')
