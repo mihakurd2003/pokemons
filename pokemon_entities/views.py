@@ -83,7 +83,7 @@ def show_pokemon(request, pokemon_id):
             'img_url': next_evolution.image.url,
         }
 
-    pokemon_entities = PokemonEntity.objects.filter(pokemon__id=requested_pokemon.id)
+    pokemon_entities = requested_pokemon.pokemon_entities.filter(pokemon__id=requested_pokemon.id)
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     for pokemon_entity in pokemon_entities:
         add_pokemon(
